@@ -47,18 +47,22 @@ struct ContentView: View {
 // MARK: - 首页 - 饮食仪表盘
 struct HomeDashboardView: View {
     @EnvironmentObject var foodTracker: FoodTracker
+    @State private var animateProgress: Bool = false
     
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 20) {
+                LazyVStack(spacing: 24) {
                     // 顶部问候和快速统计
                     welcomeSection
                     
-                    // 饮食仪表盘
-                    nutritionDashboard
+                    // 主要营养仪表盘
+                    mainNutritionDashboard
                     
-                    // 今日饮食记录清单
+                    // 营养详情卡片
+                    nutritionDetailsGrid
+                    
+                    // 今日饮食记录
                     todayFoodRecords
                     
                     // 健康数据概览
@@ -67,20 +71,35 @@ struct HomeDashboardView: View {
                     // OKR进度展示
                     okrProgressSection
                 }
-                .padding()
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+            }
+            .onAppear {
+                withAnimation(.easeInOut(duration: 1.0)) {
+                    animateProgress = true
+                }
+                print("HomeDashboardView appeared - 滑动应该正常工作")
             }
             .navigationTitle("健康饮食")
-            .background(Color(.systemGray6))
+            .background(
+                LinearGradient(
+                    colors: [Color.blue.opacity(0.1), Color.purple.opacity(0.05)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+            )
         }
     }
     
     private var welcomeSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text("你好，\(foodTracker.userProfile?.nickname ?? "用户")")
                         .font(.title2)
                         .fontWeight(.bold)
+                        .foregroundColor(.primary)
                     
                     Text("今天也要健康饮食哦 ✨")
                         .font(.subheadline)
@@ -89,155 +108,270 @@ struct HomeDashboardView: View {
                 
                 Spacer()
                 
-                // 快速统计
-                VStack {
-                    Text("\(Int(foodTracker.todayCalories))")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.blue)
-                    Text("今日卡路里")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                // 头像占位符
+                ZStack {
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 60, height: 60)
+                    
+                    Text("👤")
+                        .font(.title2)
                 }
             }
+            
+            // 快速统计栏
+            HStack(spacing: 16) {
+                quickStatCard("🔥", "今日卡路里", "\(Int(foodTracker.todayCalories))", "kcal", .orange)
+                quickStatCard("⚡", "完成度", "\(Int(foodTracker.calorieProgress * 100))", "%", .blue)
+                quickStatCard("🎯", "目标", "\(Int(foodTracker.dailyCalorieTarget))", "kcal", .green)
+            }
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(radius: 2)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
     }
     
-    private var nutritionDashboard: some View {
-        VStack(alignment: .leading, spacing: 16) {
+    private func quickStatCard(_ emoji: String, _ title: String, _ value: String, _ unit: String, _ color: Color) -> some View {
+        VStack(spacing: 4) {
+            Text(emoji)
+                .font(.title2)
+            
+            Text(title)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            
+            Text(value)
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(color)
+            
+            Text(unit)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(color.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(color.opacity(0.3), lineWidth: 1)
+                )
+        )
+    }
+    
+    private var mainNutritionDashboard: some View {
+        VStack(spacing: 20) {
             HStack {
                 Text("营养仪表盘")
-                    .font(.headline)
-                    .fontWeight(.semibold)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
                 
                 Spacer()
                 
                 Text("目标: \(Int(foodTracker.dailyCalorieTarget)) kcal")
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 4)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
             }
             
-            // 卡路里进度环
-            HStack {
-                ZStack {
-                    Circle()
-                        .stroke(Color.blue.opacity(0.2), lineWidth: 8)
-                        .frame(width: 80, height: 80)
-                    
-                    Circle()
-                        .trim(from: 0, to: foodTracker.calorieProgress)
-                        .stroke(Color.blue, style: StrokeStyle(lineWidth: 8, lineCap: .round))
-                        .frame(width: 80, height: 80)
-                        .rotationEffect(.degrees(-90))
-                    
-                    VStack {
-                        Text("\(Int(foodTracker.calorieProgress * 100))%")
-                            .font(.caption)
-                            .fontWeight(.bold)
-                        Text("完成")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
-                }
+            // 主要卡路里进度环
+            ZStack {
+                Circle()
+                    .stroke(Color.blue.opacity(0.2), lineWidth: 12)
+                    .frame(width: 160, height: 160)
                 
-                VStack(alignment: .leading, spacing: 8) {
-                    nutritionItem("蛋白质", value: foodTracker.todayProtein, unit: "g", color: .green)
-                    nutritionItem("碳水", value: foodTracker.todayCarbs, unit: "g", color: .orange)
-                    nutritionItem("脂肪", value: foodTracker.todayFat, unit: "g", color: .red)
-                }
+                Circle()
+                    .trim(from: 0, to: animateProgress ? foodTracker.calorieProgress : 0)
+                    .stroke(
+                        AngularGradient(
+                            colors: [Color.blue, Color.purple, Color.blue],
+                            center: .center
+                        ),
+                        style: StrokeStyle(lineWidth: 12, lineCap: .round)
+                    )
+                    .frame(width: 160, height: 160)
+                    .rotationEffect(.degrees(-90))
+                    .animation(.easeInOut(duration: 1.0), value: animateProgress)
                 
-                Spacer()
+                VStack(spacing: 4) {
+                    Text("\(Int(foodTracker.calorieProgress * 100))%")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
+                    
+                    Text("完成")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    Text("\(Int(foodTracker.todayCalories)) / \(Int(foodTracker.dailyCalorieTarget))")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                }
             }
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(radius: 2)
+        .padding(24)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
     }
     
-    private func nutritionItem(_ name: String, value: Double, unit: String, color: Color) -> some View {
-        HStack {
-            Circle()
-                .fill(color)
-                .frame(width: 8, height: 8)
-            
-            Text("\(name): \(String(format: "%.1f", value))\(unit)")
-                .font(.caption)
-                .foregroundColor(.primary)
-            
-            Spacer()
+    private var nutritionDetailsGrid: some View {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2), spacing: 16) {
+            nutritionCard("🥩", "蛋白质", foodTracker.todayProtein, "g", .red, 80)
+            nutritionCard("🍞", "碳水化合物", foodTracker.todayCarbs, "g", .orange, 250)
+            nutritionCard("🥑", "脂肪", foodTracker.todayFat, "g", .yellow, 60)
+            nutritionCard("💧", "水分", 1800, "ml", .blue, 2000)
         }
+    }
+    
+    private func nutritionCard(_ emoji: String, _ name: String, _ value: Double, _ unit: String, _ color: Color, _ target: Double) -> some View {
+        VStack(spacing: 12) {
+            Text(emoji)
+                .font(.title)
+            
+            Text(name)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            
+            Text("\(String(format: "%.1f", value))")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(color)
+            
+            Text(unit)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+            
+            // 小进度条
+            ProgressView(value: value / target)
+                .progressViewStyle(LinearProgressViewStyle(tint: color))
+                .scaleEffect(x: 1, y: 0.8)
+        }
+        .frame(height: 130)
+        .frame(maxWidth: .infinity)
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(color.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(color.opacity(0.3), lineWidth: 1)
+                )
+        )
     }
     
     private var todayFoodRecords: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Text("今日饮食记录")
-                    .font(.headline)
-                    .fontWeight(.semibold)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
                 
                 Spacer()
                 
                 NavigationLink(destination: FoodRecordListView()) {
-                    Text("查看全部")
-                        .font(.caption)
-                        .foregroundColor(.blue)
+                    HStack(spacing: 4) {
+                        Text("查看全部")
+                            .font(.caption)
+                        Image(systemName: "chevron.right")
+                            .font(.caption)
+                    }
+                    .foregroundColor(.blue)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
                 }
             }
             
             if foodTracker.todayRecords.isEmpty {
-                VStack {
-                    Image(systemName: "fork.knife.circle")
-                        .font(.largeTitle)
-                        .foregroundColor(.gray)
+                VStack(spacing: 12) {
+                    ZStack {
+                        Circle()
+                            .fill(Color.gray.opacity(0.1))
+                            .frame(width: 80, height: 80)
+                        
+                        Image(systemName: "fork.knife")
+                            .font(.system(size: 30))
+                            .foregroundColor(.gray)
+                    }
                     
                     Text("今天还没有饮食记录")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .font(.headline)
+                        .foregroundColor(.primary)
                     
                     Text("点击记录按钮开始记录吧")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-                .frame(height: 120)
+                .frame(height: 150)
+                .frame(maxWidth: .infinity)
             } else {
-                LazyVStack {
+                LazyVStack(spacing: 12) {
                     ForEach(foodTracker.todayRecords.prefix(3)) { record in
                         FoodRecordRow(record: record)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray.opacity(0.05))
+                            )
                     }
                 }
             }
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(radius: 2)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
     }
     
     private var healthDataOverview: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("健康数据")
-                .font(.headline)
-                .fontWeight(.semibold)
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
             
             HStack(spacing: 16) {
-                healthDataCard("BMI", value: String(format: "%.1f", foodTracker.bmi), subtitle: foodTracker.bmiCategory, color: .purple)
-                healthDataCard("体重", value: "\(String(format: "%.1f", foodTracker.currentWeight))kg", subtitle: "当前", color: .blue)
-                healthDataCard("步数", value: "\(foodTracker.healthData?.steps ?? 0)", subtitle: "今日", color: .green)
+                healthDataCard("💪", "BMI", String(format: "%.1f", foodTracker.bmi), foodTracker.bmiCategory, .purple)
+                healthDataCard("⚖️", "体重", "\(String(format: "%.1f", foodTracker.currentWeight))kg", "当前", .blue)
+                healthDataCard("👣", "步数", "\(foodTracker.healthData?.steps ?? 0)", "今日", .green)
             }
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(radius: 2)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
     }
     
-    private func healthDataCard(_ title: String, value: String, subtitle: String, color: Color) -> some View {
-        VStack {
+    private func healthDataCard(_ emoji: String, _ title: String, _ value: String, _ subtitle: String, _ color: Color) -> some View {
+        VStack(spacing: 8) {
+            Text(emoji)
+                .font(.title2)
+            
             Text(title)
                 .font(.caption)
                 .foregroundColor(.secondary)
@@ -252,49 +386,87 @@ struct HomeDashboardView: View {
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 8)
-        .background(color.opacity(0.1))
-        .cornerRadius(8)
+        .padding(.vertical, 16)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(color.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(color.opacity(0.3), lineWidth: 1)
+                )
+        )
     }
     
     private var okrProgressSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             Text("OKR进度")
-                .font(.headline)
-                .fontWeight(.semibold)
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
             
             if let okr = foodTracker.okrProgress {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 12) {
                     Text(okr.objective)
-                        .font(.subheadline)
+                        .font(.headline)
                         .fontWeight(.medium)
+                        .foregroundColor(.primary)
                     
-                    Text("\(okr.quarter) • 整体进度 \(Int(okr.progress * 100))%")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    HStack {
+                        Text(okr.quarter)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        Spacer()
+                        
+                        Text("整体进度 \(Int(okr.progress * 100))%")
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                            .fontWeight(.medium)
+                    }
                     
-                    ProgressView(value: okr.progress)
-                        .progressViewStyle(LinearProgressViewStyle(tint: .blue))
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.gray.opacity(0.2))
+                            .frame(height: 8)
+                        
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color.blue, Color.purple],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .frame(width: CGFloat(okr.progress) * 300, height: 8)
+                            .animation(.easeInOut(duration: 1.0), value: animateProgress)
+                    }
+                    .frame(height: 8)
                     
-                    ForEach(okr.keyResults.prefix(2)) { keyResult in
-                        HStack {
-                            Text(keyResult.description)
-                                .font(.caption)
-                            
-                            Spacer()
-                            
-                            Text("\(String(format: "%.0f", keyResult.current))/\(String(format: "%.0f", keyResult.target))\(keyResult.unit)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                    VStack(spacing: 8) {
+                        ForEach(okr.keyResults.prefix(2)) { keyResult in
+                            HStack {
+                                Text(keyResult.description)
+                                    .font(.caption)
+                                    .foregroundColor(.primary)
+                                
+                                Spacer()
+                                
+                                Text("\(String(format: "%.0f", keyResult.current))/\(String(format: "%.0f", keyResult.target))\(keyResult.unit)")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .fontWeight(.medium)
+                            }
                         }
                     }
                 }
             }
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(radius: 2)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
     }
 }
 
