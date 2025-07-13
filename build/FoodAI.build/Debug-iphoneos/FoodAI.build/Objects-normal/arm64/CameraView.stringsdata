@@ -1,0 +1,168 @@
+{
+  "source": "/Users/bytedance/Downloads/iOS/FoodAI/Views/CameraView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "🍎",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cal AI",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "🔥",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "0",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 177
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 260
+        }
+      },
+      {
+        "comment": "",
+        "key": "Calories left",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 264
+        }
+      },
+      {
+        "comment": "",
+        "key": "🔥",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 287
+        }
+      },
+      {
+        "comment": "",
+        "key": "Recently uploaded",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 333
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tap + to add your first meal of the day",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 354
+        }
+      },
+      {
+        "comment": "",
+        "key": "No meals recorded for this date",
+        "location": {
+          "startingColumn": 92,
+          "startingLine": 354
+        }
+      },
+      {
+        "comment": "",
+        "key": "查看更多 (%lld 项)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 379
+        }
+      },
+      {
+        "comment": "",
+        "key": "Home",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 418
+        }
+      },
+      {
+        "comment": "",
+        "key": "Progress",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 430
+        }
+      },
+      {
+        "comment": "",
+        "key": "Settings",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 442
+        }
+      },
+      {
+        "comment": "",
+        "key": "拍摄食物",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 497
+        }
+      },
+      {
+        "comment": "",
+        "key": "AI正在识别食物...",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 525
+        }
+      },
+      {
+        "comment": "",
+        "key": "请保持图像稳定",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 529
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld卡",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 659
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 729
+        }
+      }
+    ]
+  },
+  "version": 1
+}

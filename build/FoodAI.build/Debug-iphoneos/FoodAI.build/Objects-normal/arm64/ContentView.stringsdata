@@ -1,0 +1,432 @@
+{
+  "source": "/Users/bytedance/Downloads/iOS/FoodAI/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "首页",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "记录",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "饭搭子",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "我的",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "健康饮食",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "你好，%@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "今天也要健康饮食哦 ✨",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "今日卡路里",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "营养仪表盘",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "目标: %lld kcal",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "完成",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 141
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: %@%@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 168
+        }
+      },
+      {
+        "comment": "",
+        "key": "今日饮食记录",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 179
+        }
+      },
+      {
+        "comment": "",
+        "key": "查看全部",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 186
+        }
+      },
+      {
+        "comment": "",
+        "key": "今天还没有饮食记录",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "点击记录按钮开始记录吧",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "健康数据",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 223
+        }
+      },
+      {
+        "comment": "",
+        "key": "OKR进度",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 262
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ • 整体进度 %lld%%",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 272
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@/%@%@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 286
+        }
+      },
+      {
+        "comment": "",
+        "key": "记录",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 315
+        }
+      },
+      {
+        "comment": "",
+        "key": "饮食记录",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 322
+        }
+      },
+      {
+        "comment": "",
+        "key": "其他记录",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 352
+        }
+      },
+      {
+        "comment": "",
+        "key": "饭搭子",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 456
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 436
+        }
+      },
+      {
+        "comment": "",
+        "key": "动态",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 437
+        }
+      },
+      {
+        "comment": "",
+        "key": "列表",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 438
+        }
+      },
+      {
+        "comment": "",
+        "key": "主页",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 439
+        }
+      },
+      {
+        "comment": "",
+        "key": "今天的午餐很健康哦，低脂高蛋白 💪",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 492
+        }
+      },
+      {
+        "comment": "",
+        "key": "关注",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 481
+        }
+      },
+      {
+        "comment": "",
+        "key": "健康达人%lld",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 471
+        }
+      },
+      {
+        "comment": "",
+        "key": "2小时前",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 474
+        }
+      },
+      {
+        "comment": "",
+        "key": "点赞",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 505
+        }
+      },
+      {
+        "comment": "",
+        "key": "评论",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 512
+        }
+      },
+      {
+        "comment": "",
+        "key": "分享",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 519
+        }
+      },
+      {
+        "comment": "",
+        "key": "已关注",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 559
+        }
+      },
+      {
+        "comment": "",
+        "key": "关注",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 559
+        }
+      },
+      {
+        "comment": "",
+        "key": "邀请/添加饭搭子",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 595
+        }
+      },
+      {
+        "comment": "",
+        "key": "邀请朋友加入",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 599
+        }
+      },
+      {
+        "comment": "",
+        "key": "搜索添加饭搭子",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 608
+        }
+      },
+      {
+        "comment": "",
+        "key": "抄作业",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 625
+        }
+      },
+      {
+        "comment": "",
+        "key": "看看优秀饭搭子的饮食搭配",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 629
+        }
+      },
+      {
+        "comment": "",
+        "key": "健康搭配 %lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 641
+        }
+      },
+      {
+        "comment": "",
+        "key": "我的",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 675
+        }
+      },
+      {
+        "comment": "",
+        "key": "头像",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 688
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ • %lldcm • %@kg",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 699
+        }
+      },
+      {
+        "comment": "",
+        "key": "VIP会员",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 717
+        }
+      },
+      {
+        "comment": "",
+        "key": "普通用户",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 717
+        }
+      },
+      {
+        "comment": "",
+        "key": "升级VIP",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 724
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ • %@ kcal",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 831
+        }
+      },
+      {
+        "comment": "",
+        "key": "饮食记录",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 863
+        }
+      }
+    ]
+  },
+  "version": 1
+}

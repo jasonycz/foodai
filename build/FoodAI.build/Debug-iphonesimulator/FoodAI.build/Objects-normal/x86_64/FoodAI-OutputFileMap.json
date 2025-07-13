@@ -1,0 +1,118 @@
+{
+  "" : {
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAI-master.dia",
+    "emit-module-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAI-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAI-master-emit-module.dia",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAI-master.swiftdeps"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/ContentView.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ContentView.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ContentView.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ContentView.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ContentView.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ContentView.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ContentView~partial.swiftmodule"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/FoodAIApp.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAIApp.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAIApp.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAIApp.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAIApp.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAIApp.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAIApp.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAIApp.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodAIApp~partial.swiftmodule"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/Models/FoodItem.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodItem.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodItem.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodItem.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodItem.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodItem.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodItem.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodItem.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodItem~partial.swiftmodule"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/Models/FoodTracker.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodTracker.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodTracker.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodTracker.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodTracker.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodTracker.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodTracker.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodTracker.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodTracker~partial.swiftmodule"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/Services/AIFoodRecognitionService.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/AIFoodRecognitionService.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/AIFoodRecognitionService.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/AIFoodRecognitionService.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/AIFoodRecognitionService.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/AIFoodRecognitionService.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/AIFoodRecognitionService.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/AIFoodRecognitionService.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/AIFoodRecognitionService~partial.swiftmodule"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/Services/CameraManager.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraManager.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraManager.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraManager.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraManager.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraManager.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraManager.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraManager.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraManager~partial.swiftmodule"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/Views/CameraView.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraView.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraView.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraView.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraView.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraView.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraView.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraView.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/CameraView~partial.swiftmodule"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/Views/FoodDetailView.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodDetailView.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodDetailView.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodDetailView.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodDetailView.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodDetailView.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodDetailView.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodDetailView.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/FoodDetailView~partial.swiftmodule"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/Views/ProfileView.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ProfileView.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ProfileView.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ProfileView.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ProfileView.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ProfileView.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ProfileView.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ProfileView.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/ProfileView~partial.swiftmodule"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/Views/StatisticsView.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/StatisticsView.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/StatisticsView.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/StatisticsView.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/StatisticsView.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/StatisticsView.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/StatisticsView.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/StatisticsView.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/StatisticsView~partial.swiftmodule"
+  },
+  "/Users/bytedance/Downloads/iOS/FoodAI/Views/TodayView.swift" : {
+    "const-values" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/TodayView.swiftconstvalues",
+    "dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/TodayView.d",
+    "diagnostics" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/TodayView.dia",
+    "index-unit-output-path" : "/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/TodayView.o",
+    "llvm-bc" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/TodayView.bc",
+    "object" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/TodayView.o",
+    "swift-dependencies" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/TodayView.swiftdeps",
+    "swiftmodule" : "/Users/bytedance/Downloads/iOS/FoodAI/build/FoodAI.build/Debug-iphonesimulator/FoodAI.build/Objects-normal/x86_64/TodayView~partial.swiftmodule"
+  }
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>zh_CN</string>
+    <key>CFBundleDisplayName</key>
+    <string>FoodAI</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>UILaunchScreen</key>
+    <dict/>
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+        <string>armv7</string>
+    </array>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>NSCameraUsageDescription</key>
+    <string>FoodAI需要使用相机来拍摄食物进行AI识别分析</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>FoodAI需要访问相册来选择食物图片进行AI识别分析</string>
+    <key>NSHealthShareUsageDescription</key>
+    <string>FoodAI需要读取您的健康数据（如体重、身高、步数）来提供个性化的营养建议和健康分析</string>
+    <key>NSHealthUpdateUsageDescription</key>
+    <string>FoodAI需要写入健康数据来记录您的饮食摄入、运动消耗等信息，帮助您更好地管理健康</string>
+    <key>UIStatusBarTintParameters</key>
+    <dict>
+        <key>UINavigationBar</key>
+        <dict>
+            <key>Style</key>
+            <string>UIBarStyleDefault</string>
+            <key>Translucent</key>
+            <false/>
+        </dict>
+    </dict>
+</dict>
+</plist> 
