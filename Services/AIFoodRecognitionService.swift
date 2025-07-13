@@ -65,7 +65,7 @@ class AIFoodRecognitionService: ObservableObject {
         
         var results: [FoodItem] = []
         
-        for i in 0..<itemCount {
+        for _ in 0..<itemCount {
             let food = getRandomFood()
             let confidence = Double.random(in: 0.7...0.95)
             
@@ -74,7 +74,8 @@ class AIFoodRecognitionService: ObservableObject {
                 weight: Double.random(in: 50...200),
                 portion: "1份",
                 nutrition: food.nutrition,
-                recordType: .photoRecognition
+                recordType: .photoRecognition,
+                confidence: confidence
             )
             
             results.append(foodItem)

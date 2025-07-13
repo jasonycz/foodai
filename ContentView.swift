@@ -41,6 +41,9 @@ struct ContentView: View {
         .environmentObject(foodTracker)
         .accentColor(.blue)
         .preferredColorScheme(.light)
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwitchToRecordTab"))) { _ in
+            selectedTab = 1
+        }
     }
 }
 
@@ -472,127 +475,746 @@ struct HomeDashboardView: View {
 
 // MARK: - 记录页面主视图
 struct RecordMainView: View {
+    @EnvironmentObject var foodTracker: FoodTracker
+    @State private var showingCamera = false
+    @State private var showingImagePicker = false
+    @State private var showingBarcodeScanner = false
+    @State private var showingManualEntry = false
+    @State private var showingMoodDiary = false
+    @State private var showingExerciseRecord = false
+    @State private var showingWeightRecord = false
+    @State private var animateCards = false
+    
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 20) {
+                LazyVStack(spacing: 24) {
+                    // 顶部欢迎区域
+                    headerSection
+                    
                     // 饮食记录选项
                     foodRecordOptions
                     
                     // 其他记录选项
                     otherRecordOptions
+                    
+                    // 快速统计
+                    quickStatsSection
                 }
-                .padding()
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+            }
+            .onAppear {
+                withAnimation(.easeInOut(duration: 0.8)) {
+                    animateCards = true
+                }
             }
             .navigationTitle("记录")
-            .background(Color(.systemGray6))
+            .background(
+                LinearGradient(
+                    colors: [Color.green.opacity(0.1), Color.blue.opacity(0.05)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+            )
         }
+        .sheet(isPresented: $showingCamera) {
+            CameraView()
+                .environmentObject(foodTracker)
+        }
+        .sheet(isPresented: $showingImagePicker) {
+            ImagePickerView()
+                .environmentObject(foodTracker)
+        }
+        .sheet(isPresented: $showingBarcodeScanner) {
+            CameraView()
+                .environmentObject(foodTracker)
+        }
+        .sheet(isPresented: $showingManualEntry) {
+            ManualEntryView()
+                .environmentObject(foodTracker)
+        }
+        .sheet(isPresented: $showingMoodDiary) {
+            MoodDiaryView()
+                .environmentObject(foodTracker)
+        }
+        .sheet(isPresented: $showingExerciseRecord) {
+            ExerciseRecordView()
+                .environmentObject(foodTracker)
+        }
+        .sheet(isPresented: $showingWeightRecord) {
+            WeightRecordView()
+                .environmentObject(foodTracker)
+        }
+    }
+    
+    private var headerSection: some View {
+        VStack(spacing: 16) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("今日记录")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
+                    
+                    Text("选择您要记录的内容")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                
+                Spacer()
+                
+                ZStack {
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [Color.green.opacity(0.3), Color.blue.opacity(0.3)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 60, height: 60)
+                    
+                    Text("📝")
+                        .font(.title2)
+                }
+                .scaleEffect(animateCards ? 1.0 : 0.8)
+                .animation(.spring(response: 0.6, dampingFraction: 0.8), value: animateCards)
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
     }
     
     private var foodRecordOptions: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("饮食记录")
-                .font(.headline)
-                .fontWeight(.semibold)
+        VStack(alignment: .leading, spacing: 20) {
+            HStack {
+                Text("🍽️ 饮食记录")
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                
+                Spacer()
+                
+                Text("已记录 \(foodTracker.todayRecords.count) 项")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 4)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
+            }
             
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), spacing: 16) {
-                recordOptionCard("拍照识别", icon: "camera.fill", description: "拍照自动识别食物", color: .blue) {
-                    // 拍照识别功能
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2), spacing: 16) {
+                recordOptionCard(
+                    "📸", "拍照识别", "拍照自动识别食物", 
+                    .blue, 0.0
+                ) {
+                    showingCamera = true
                 }
                 
-                recordOptionCard("选择相册", icon: "photo.fill", description: "从相册选择照片识别", color: .green) {
-                    // 选择相册功能
+                recordOptionCard(
+                    "🖼️", "选择相册", "从相册选择照片识别", 
+                    .green, 0.1
+                ) {
+                    showingImagePicker = true
                 }
                 
-                recordOptionCard("条形码识别", icon: "barcode.viewfinder", description: "扫描食品包装条形码", color: .orange) {
-                    // 条形码识别功能
+                recordOptionCard(
+                    "🔍", "条形码识别", "扫描食品包装条形码", 
+                    .orange, 0.2
+                ) {
+                    showingBarcodeScanner = true
                 }
                 
-                recordOptionCard("手工录入", icon: "square.and.pencil", description: "手动输入食物信息", color: .purple) {
-                    // 手工录入功能
+                recordOptionCard(
+                    "✏️", "手工录入", "手动输入食物信息", 
+                    .purple, 0.3
+                ) {
+                    showingManualEntry = true
                 }
             }
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(radius: 2)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
     }
     
     private var otherRecordOptions: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("其他记录")
-                .font(.headline)
-                .fontWeight(.semibold)
+        VStack(alignment: .leading, spacing: 16) {
+            Text("📊 其他记录")
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
             
             VStack(spacing: 12) {
-                recordListItem("情绪日记", icon: "heart.fill", color: .pink) {
-                    // 情绪日记功能
+                recordListItem("💝", "情绪日记", "记录今天的心情和感受", .pink, 0.4) {
+                    showingMoodDiary = true
                 }
                 
-                recordListItem("运动记录", icon: "figure.run", color: .green) {
-                    // 运动记录功能
+                recordListItem("🏃‍♂️", "运动记录", "记录运动类型和消耗", .green, 0.5) {
+                    showingExerciseRecord = true
                 }
                 
-                recordListItem("体重记录", icon: "scalemass.fill", color: .blue) {
-                    // 体重记录功能
+                recordListItem("⚖️", "体重记录", "记录体重变化", .blue, 0.6) {
+                    showingWeightRecord = true
                 }
             }
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(radius: 2)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
     }
     
-    private func recordOptionCard(_ title: String, icon: String, description: String, color: Color, action: @escaping () -> Void) -> some View {
+    private var quickStatsSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("📈 今日统计")
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+            
+            HStack(spacing: 16) {
+                quickStatCard("🍽️", "饮食", "\(foodTracker.todayRecords.count)", "次", .blue)
+                quickStatCard("🏃‍♂️", "运动", "\(foodTracker.todayExercises.count)", "次", .green)
+                quickStatCard("💝", "情绪", foodTracker.todayMood != nil ? "1" : "0", "次", .pink)
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
+    }
+    
+    private func recordOptionCard(_ emoji: String, _ title: String, _ description: String, _ color: Color, _ delay: Double, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             VStack(spacing: 12) {
-                Image(systemName: icon)
-                    .font(.title)
-                    .foregroundColor(color)
+                Text(emoji)
+                    .font(.system(size: 32))
+                    .scaleEffect(animateCards ? 1.0 : 0.5)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(delay), value: animateCards)
                 
                 Text(title)
                     .font(.headline)
-                    .fontWeight(.medium)
+                    .fontWeight(.semibold)
                     .foregroundColor(.primary)
                 
                 Text(description)
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
             }
-            .frame(height: 120)
+            .frame(height: 140)
             .frame(maxWidth: .infinity)
-            .background(color.opacity(0.1))
-            .cornerRadius(12)
+            .padding(16)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(color.opacity(0.1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(
+                                LinearGradient(
+                                    colors: [color.opacity(0.5), color.opacity(0.2)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 2
+                            )
+                    )
+            )
+            .scaleEffect(animateCards ? 1.0 : 0.8)
+            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(delay), value: animateCards)
         }
         .buttonStyle(PlainButtonStyle())
     }
     
-    private func recordListItem(_ title: String, icon: String, color: Color, action: @escaping () -> Void) -> some View {
+    private func recordListItem(_ emoji: String, _ title: String, _ description: String, _ color: Color, _ delay: Double, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            HStack {
-                Image(systemName: icon)
-                    .font(.title2)
-                    .foregroundColor(color)
-                    .frame(width: 30)
+            HStack(spacing: 16) {
+                ZStack {
+                    Circle()
+                        .fill(color.opacity(0.2))
+                        .frame(width: 50, height: 50)
+                    
+                    Text(emoji)
+                        .font(.title2)
+                }
+                .scaleEffect(animateCards ? 1.0 : 0.5)
+                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(delay), value: animateCards)
                 
-                Text(title)
-                    .font(.headline)
-                    .foregroundColor(.primary)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title)
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.primary)
+                    
+                    Text(description)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
                 
                 Spacer()
                 
                 Image(systemName: "chevron.right")
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .padding(.trailing, 8)
             }
-            .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(8)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(color.opacity(0.05))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(color.opacity(0.2), lineWidth: 1)
+                    )
+            )
+            .scaleEffect(animateCards ? 1.0 : 0.95)
+            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(delay), value: animateCards)
         }
         .buttonStyle(PlainButtonStyle())
+    }
+    
+    private func quickStatCard(_ emoji: String, _ title: String, _ value: String, _ unit: String, _ color: Color) -> some View {
+        VStack(spacing: 8) {
+            Text(emoji)
+                .font(.title2)
+            
+            Text(title)
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            Text(value)
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(color)
+            
+            Text(unit)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 16)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(color.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(color.opacity(0.3), lineWidth: 1)
+                )
+        )
+        .scaleEffect(animateCards ? 1.0 : 0.8)
+        .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.7), value: animateCards)
+    }
+}
+
+// MARK: - 手工录入视图
+struct ManualEntryView: View {
+    @EnvironmentObject var foodTracker: FoodTracker
+    @Environment(\.dismiss) private var dismiss
+    @State private var foodName = ""
+    @State private var quantity = ""
+    @State private var selectedUnit = "g"
+    @State private var selectedMealType: MealType = .breakfast
+    @State private var selectedEmoji = "🍎"
+    @State private var calories = ""
+    @State private var protein = ""
+    @State private var carbs = ""
+    @State private var fat = ""
+    
+    let units = ["g", "ml", "个", "份", "杯", "勺"]
+    let mealTypes = MealType.allCases
+    let foodEmojis = ["🍎", "🍌", "🍊", "🥕", "🍞", "🥩", "🍚", "🥛", "🍫", "🥗"]
+    
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 24) {
+                    // 顶部图标
+                    headerSection
+                    
+                    // 基本信息
+                    basicInfoSection
+                    
+                    // 营养信息
+                    nutritionSection
+                    
+                    // 餐次选择
+                    mealTypeSection
+                    
+                    // 提交按钮
+                    submitButton
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+            }
+            .navigationTitle("手工录入")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("取消") {
+                        dismiss()
+                    }
+                }
+            }
+            .background(
+                LinearGradient(
+                    colors: [Color.purple.opacity(0.1), Color.pink.opacity(0.05)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+            )
+        }
+    }
+    
+    private var headerSection: some View {
+        VStack(spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color.purple.opacity(0.3), Color.pink.opacity(0.3)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 80, height: 80)
+                
+                Text("✏️")
+                    .font(.system(size: 32))
+            }
+            
+            Text("手工录入食物信息")
+                .font(.headline)
+                .fontWeight(.medium)
+                .foregroundColor(.primary)
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
+    }
+    
+    private var basicInfoSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("🍽️ 基本信息")
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+            
+            VStack(spacing: 16) {
+                // 食物名称
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("食物名称")
+                        .font(.headline)
+                        .fontWeight(.medium)
+                    
+                    TextField("请输入食物名称", text: $foodName)
+                        .textFieldStyle(CustomTextFieldStyle())
+                }
+                
+                // 表情符号选择
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("选择表情")
+                        .font(.headline)
+                        .fontWeight(.medium)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 12) {
+                            ForEach(foodEmojis, id: \.self) { emoji in
+                                Button(action: {
+                                    selectedEmoji = emoji
+                                }) {
+                                    Text(emoji)
+                                        .font(.title2)
+                                        .padding(8)
+                                        .background(
+                                            Circle()
+                                                .fill(selectedEmoji == emoji ? Color.purple.opacity(0.2) : Color.gray.opacity(0.1))
+                                        )
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 4)
+                    }
+                }
+                
+                // 数量和单位
+                HStack(spacing: 16) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("数量")
+                            .font(.headline)
+                            .fontWeight(.medium)
+                        
+                        TextField("100", text: $quantity)
+                            .textFieldStyle(CustomTextFieldStyle())
+                            .keyboardType(.decimalPad)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("单位")
+                            .font(.headline)
+                            .fontWeight(.medium)
+                        
+                        Picker("单位", selection: $selectedUnit) {
+                            ForEach(units, id: \.self) { unit in
+                                Text(unit).tag(unit)
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.gray.opacity(0.1))
+                        )
+                    }
+                }
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
+    }
+    
+    private var nutritionSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("📊 营养信息")
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+            
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2), spacing: 16) {
+                nutritionInputField("🔥", "卡路里", "kcal", $calories)
+                nutritionInputField("🥩", "蛋白质", "g", $protein)
+                nutritionInputField("🍞", "碳水", "g", $carbs)
+                nutritionInputField("🥑", "脂肪", "g", $fat)
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
+    }
+    
+    private func nutritionInputField(_ emoji: String, _ label: String, _ unit: String, _ binding: Binding<String>) -> some View {
+        VStack(spacing: 8) {
+            Text(emoji)
+                .font(.title2)
+            
+            Text(label)
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            TextField("0", text: binding)
+                .textFieldStyle(CustomTextFieldStyle())
+                .keyboardType(.decimalPad)
+                .multilineTextAlignment(.center)
+            
+            Text(unit)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.gray.opacity(0.05))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                )
+        )
+    }
+    
+    private var mealTypeSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("🍽️ 餐次选择")
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+            
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 2), spacing: 12) {
+                ForEach(mealTypes, id: \.self) { mealType in
+                    Button(action: {
+                        selectedMealType = mealType
+                    }) {
+                        HStack {
+                            Text(mealType.emoji)
+                                .font(.title2)
+                            
+                            Text(mealType.displayName)
+                                .font(.headline)
+                                .fontWeight(.medium)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(selectedMealType == mealType ? Color.purple.opacity(0.2) : Color.gray.opacity(0.1))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(selectedMealType == mealType ? Color.purple.opacity(0.5) : Color.gray.opacity(0.3), lineWidth: 2)
+                                )
+                        )
+                        .foregroundColor(selectedMealType == mealType ? .purple : .primary)
+                    }
+                }
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
+    }
+    
+    private var submitButton: some View {
+        Button(action: submitFood) {
+            HStack {
+                Image(systemName: "plus.circle.fill")
+                    .font(.title2)
+                
+                Text("添加食物记录")
+                    .font(.headline)
+                    .fontWeight(.semibold)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(
+                LinearGradient(
+                    colors: [Color.purple, Color.pink],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .foregroundColor(.white)
+            .cornerRadius(16)
+            .shadow(color: Color.purple.opacity(0.3), radius: 10, x: 0, y: 5)
+        }
+        .disabled(foodName.isEmpty)
+        .opacity(foodName.isEmpty ? 0.6 : 1.0)
+        .padding(.horizontal, 20)
+        .padding(.bottom, 20)
+    }
+    
+    private func submitFood() {
+        let nutrition = Nutrition(
+            calories: Double(calories) ?? 0,
+            protein: Double(protein) ?? 0,
+            carbs: Double(carbs) ?? 0,
+            fat: Double(fat) ?? 0
+        )
+        
+        let foodItem = FoodItem(
+            name: foodName,
+            emoji: selectedEmoji,
+            weight: Double(quantity) ?? 100,
+            portion: "1份",
+            quantity: Double(quantity) ?? 100,
+            unit: selectedUnit,
+            nutrition: nutrition,
+            recordType: .manualInput,
+            mealType: selectedMealType
+        )
+        
+        foodTracker.addFoodItem(foodItem)
+        dismiss()
+    }
+}
+
+// MARK: - 情绪日记视图占位符
+struct MoodDiaryView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        VStack {
+            Text("情绪日记")
+                .font(.title)
+            Text("这里将实现情绪记录功能")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            Button("关闭") {
+                dismiss()
+            }
+            .padding()
+            .background(Color.pink)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+        }
+        .padding()
+    }
+}
+
+// MARK: - 运动记录视图占位符
+struct ExerciseRecordView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        VStack {
+            Text("运动记录")
+                .font(.title)
+            Text("这里将实现运动记录功能")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            Button("关闭") {
+                dismiss()
+            }
+            .padding()
+            .background(Color.green)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+        }
+        .padding()
+    }
+}
+
+// MARK: - 体重记录视图占位符
+struct WeightRecordView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        VStack {
+            Text("体重记录")
+                .font(.title)
+            Text("这里将实现体重记录功能")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            Button("关闭") {
+                dismiss()
+            }
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+        }
+        .padding()
     }
 }
 
@@ -1043,6 +1665,67 @@ extension DateFormatter {
         formatter.timeStyle = .short
         return formatter
     }()
+}
+
+// MARK: - 图片选择器包装视图
+struct ImagePickerView: View {
+    @EnvironmentObject var foodTracker: FoodTracker
+    @Environment(\.dismiss) private var dismiss
+    @State private var selectedImage: UIImage?
+    @State private var showingPicker = true
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                if let image = selectedImage {
+                    VStack(spacing: 20) {
+                        Text("已选择图片")
+                            .font(.headline)
+                        
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight: 300)
+                            .cornerRadius(12)
+                        
+                        Button("确认使用") {
+                            // 这里可以调用AI识别服务
+                            // 暂时创建一个模拟的食物记录
+                            let mockNutrition = Nutrition(calories: 150, protein: 8, carbs: 20, fat: 5)
+                            let foodItem = FoodItem(
+                                name: "相册选择的食物",
+                                emoji: "🍎",
+                                weight: 100,
+                                portion: "1份",
+                                nutrition: mockNutrition,
+                                recordType: .albumSelection
+                            )
+                            foodTracker.addFoodItem(foodItem)
+                            dismiss()
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .padding()
+                } else {
+                    Text("选择图片...")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                }
+            }
+            .sheet(isPresented: $showingPicker) {
+                ImagePicker(image: $selectedImage, isPresented: $showingPicker)
+            }
+            .navigationTitle("选择图片")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("取消") {
+                        dismiss()
+                    }
+                }
+            }
+        }
+    }
 }
 
 #Preview {

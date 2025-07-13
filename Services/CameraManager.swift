@@ -31,6 +31,8 @@ class CameraManager: NSObject, ObservableObject {
         do {
             let input = try AVCaptureDeviceInput(device: device)
             currentInput = input
+            
+            session.beginConfiguration()
             session.sessionPreset = .photo
             
             if session.canAddInput(input) {
@@ -41,6 +43,8 @@ class CameraManager: NSObject, ObservableObject {
                 session.addOutput(output)
             }
             
+            session.commitConfiguration()
+            
         } catch {
             print("相机设置失败: \(error.localizedDescription)")
         }
@@ -50,10 +54,14 @@ class CameraManager: NSObject, ObservableObject {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
             isPermissionGranted = true
+            startSession()
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 DispatchQueue.main.async {
                     self.isPermissionGranted = granted
+                    if granted {
+                        self.startSession()
+                    }
                 }
             }
         default:
@@ -62,12 +70,33 @@ class CameraManager: NSObject, ObservableObject {
     }
     
     func capturePhoto(completion: @escaping (UIImage?) -> Void) {
+        // 检查会话状态
+        guard session.isRunning else {
+            print("相机会话未运行")
+            completion(nil)
+            return
+        }
+        
+        // 检查输出连接
+        guard let connection = output.connection(with: .video) else {
+            print("无法获取视频连接")
+            completion(nil)
+            return
+        }
+        
+        // 检查连接状态
+        guard connection.isActive && connection.isEnabled else {
+            print("视频连接未激活")
+            completion(nil)
+            return
+        }
+        
         self.completion = completion
         
         let settings = AVCapturePhotoSettings()
         
         // 设置闪光灯
-        if isFlashOn {
+        if isFlashOn && currentDevice?.hasFlash == true {
             settings.flashMode = .on
         } else {
             settings.flashMode = .off
@@ -148,18 +177,18 @@ class CameraManager: NSObject, ObservableObject {
     }
     
     func startSession() {
-        if !session.isRunning {
-            DispatchQueue.global(qos: .background).async {
-                self.session.startRunning()
-            }
+        guard !session.isRunning else { return }
+        
+        DispatchQueue.global(qos: .background).async {
+            self.session.startRunning()
         }
     }
     
     func stopSession() {
-        if session.isRunning {
-            DispatchQueue.global(qos: .background).async {
-                self.session.stopRunning()
-            }
+        guard session.isRunning else { return }
+        
+        DispatchQueue.global(qos: .background).async {
+            self.session.stopRunning()
         }
     }
 }

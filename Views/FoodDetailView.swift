@@ -7,6 +7,7 @@ struct FoodDetailView: View {
     @State private var showingEditView = false
     @State private var showingDeleteAlert = false
     @State private var showingShareSheet = false
+    @State private var showingAddRecordAlert = false
     
     init(foodItem: FoodItem) {
         self._foodItem = State(initialValue: foodItem)
@@ -75,6 +76,14 @@ struct FoodDetailView: View {
             }
         } message: {
             Text("确定要删除这个食物记录吗？")
+        }
+        .alert("添加记录", isPresented: $showingAddRecordAlert) {
+            Button("取消", role: .cancel) { }
+            Button("添加") {
+                addFoodRecord()
+            }
+        } message: {
+            Text("将此食物添加到今天的饮食记录中吗？")
         }
         .sheet(isPresented: $showingShareSheet) {
             ShareSheetView(foodItem: foodItem)
@@ -373,6 +382,32 @@ struct FoodDetailView: View {
     
     private var actionButtonsSection: some View {
         VStack(spacing: 12) {
+            // 添加饮食记录按钮
+            Button(action: {
+                showingAddRecordAlert = true
+            }) {
+                HStack {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.system(size: 16, weight: .medium))
+                    
+                    Text("添加饮食记录")
+                        .font(.system(size: 16, weight: .medium))
+                }
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color.green, Color.blue]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                )
+            }
+            
             // 分享按钮
             Button(action: {
                 showingShareSheet = true
@@ -424,6 +459,51 @@ struct FoodDetailView: View {
     }
     
     // MARK: - 辅助方法
+    
+    private func addFoodRecord() {
+        // 创建新的食物记录，使用当前时间戳
+        let newFoodItem = FoodItem(
+            name: foodItem.name,
+            emoji: foodItem.emoji,
+            weight: foodItem.weight,
+            portion: foodItem.portion,
+            quantity: foodItem.quantity,
+            unit: foodItem.unit,
+            nutrition: foodItem.nutrition,
+            recordType: .manualInput,
+            mealType: getCurrentMealType(),
+            imageUrl: foodItem.imageUrl,
+            confidence: foodItem.confidence,
+            tags: foodItem.tags,
+            mood: foodItem.mood
+        )
+        
+        // 添加到食物追踪器
+        foodTracker.addFoodItem(newFoodItem)
+        
+        // 发送通知，切换到记录tab
+        NotificationCenter.default.post(name: NSNotification.Name("SwitchToRecordTab"), object: nil)
+        
+        // 关闭当前视图
+        dismiss()
+    }
+    
+    private func getCurrentMealType() -> MealType {
+        let hour = Calendar.current.component(.hour, from: Date())
+        
+        switch hour {
+        case 5..<11:
+            return .breakfast
+        case 11..<14:
+            return .lunch
+        case 14..<17:
+            return .snack
+        case 17..<22:
+            return .dinner
+        default:
+            return .snack
+        }
+    }
     
     private func formatTime(_ date: Date) -> String {
         let formatter = DateFormatter()
